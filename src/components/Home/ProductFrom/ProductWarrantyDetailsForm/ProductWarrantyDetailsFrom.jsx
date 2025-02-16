@@ -1,5 +1,6 @@
 import InputField from "../../../common/form/InputField.jsx";
 import PropTypes from "prop-types";
+import FormHandlingButton from "../../../common/form/FormHandlingButton.jsx";
 
 const ProductWarrantyDetailsFrom = ({ handleBackFormRendering }) => {
   return (
@@ -22,14 +23,11 @@ const ProductWarrantyDetailsFrom = ({ handleBackFormRendering }) => {
         name="warranty_end_date"
         labelName="Warranty End Date"
       />
-
-      <button
-        type="button"
-        onClick={handleBackFormRendering}
-        className="text-white bg-gray-700 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-      >
-        Back to basic details
-      </button>
+      <FormHandlingButton
+        executingMethod={handleBackFormRendering}
+        buttonName=" Back to basic details"
+        btnStyle='text-white bg-gray-700 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'
+      />
     </form>
   );
 };
