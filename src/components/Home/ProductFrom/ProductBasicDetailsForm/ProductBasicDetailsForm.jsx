@@ -2,23 +2,27 @@ import InputField from "../../../common/form/InputField.jsx";
 import PropTypes from "prop-types";
 import FormHandlingButton from "../../../common/form/FormHandlingButton.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { storeProductBasicDetails } from "../../../../utlities/slice/productBasicDetailsSlice.js";
-import {useEffect, useState} from "react";
+import {
+  resetProductBasicDetails,
+  storeProductBasicDetails,
+} from "../../../../utlities/slice/productBasicDetailsSlice.js";
+import { useEffect, useState } from "react";
+import RestBtn from '../../../../assets/icon/reset.png';
 
 const ProductBasicDetailsForm = ({
   productBasicDetails,
   setProductBasicDetails,
   handleNextFormRendering,
 }) => {
-    const [existingProductDetails, setExistingProductDetails] = useState({})
+  const [existingProductDetails, setExistingProductDetails] = useState({});
   const dispatch = useDispatch();
   const alreadyAddedProductDetails = useSelector(
-    (state) => state.productDetails.productBasicDetails,
+    (state) => state.productDetails.product.productBasicDetails,
   );
 
-    useEffect(() => {
-        setExistingProductDetails(alreadyAddedProductDetails)
-    }, [alreadyAddedProductDetails]);
+  useEffect(() => {
+    setExistingProductDetails(alreadyAddedProductDetails);
+  }, [alreadyAddedProductDetails]);
   const handleInputField = (event) => {
     const { name, value } = event.target;
 
@@ -30,12 +34,26 @@ const ProductBasicDetailsForm = ({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(storeProductBasicDetails(productBasicDetails));
+     if (productBasicDetails.product_name !== '') {
+         dispatch(storeProductBasicDetails(productBasicDetails));
+         handleNextFormRendering();
+         return
+     }
+
+      dispatch(storeProductBasicDetails(existingProductDetails));
+
     handleNextFormRendering();
+  };
+
+  const resetBasicDetailsForm = () => {
+    dispatch(resetProductBasicDetails());
   };
 
   return (
     <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
+      <button type="button" onClick={resetBasicDetailsForm}>
+        <img src={RestBtn} alt='reset buton' />
+      </button>
       <div>
         <h1 className="text-lg font-bold">Product Basic Details</h1>
       </div>
